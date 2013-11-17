@@ -4,6 +4,12 @@ Mgla3 is a mini game programming library written in Haxe, OpenFL and Away3D. Mgl
 
 Using the [SiON](https://github.com/keim/SiON "SiON") synthesizer library.
 
+####Sample game
+
+[BACKATTACKER](http://abagames.sakura.ne.jp/flash/ba/)
+
+[LASER VS BOUNCE RECTS](http://abagames.sakura.ne.jp/flash/lvbr/)
+
 License
 ----------
 Copyright &copy; 2013 ABA Games
