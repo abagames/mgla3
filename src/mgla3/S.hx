@@ -14,7 +14,7 @@ class S { // Sound
 	public function t(from:Float, time:Int = 1, to:Float = 0):S {
 		return addTone(from, time, to);
 	}
-	public function w(width:Float = 0, interval:Float = 0):S { return setWave(width, interval); }
+	public function w(width:Float = 0, interval:Float = 1):S { return setWave(width, interval); }
 	public function m(maxLength:Int = 3, step:Int = 1, seed:Int = -1):S {
 		return setMelody(maxLength, step, seed);
 	}
