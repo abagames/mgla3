@@ -37,6 +37,7 @@ class P { // Particle
 	
 	public var r(get, null):Bool; // remove
 	
+	static inline var ANIMATION_SET_COUNT = 8;
 	static var random:R;
 	static var vel:V;
 	static var velZ:V;
@@ -55,7 +56,7 @@ class P { // Particle
 	var aInitProperties:ParticleProperties -> Void;
 	var geometries:Vector<Geometry>;
 	var geometry:ParticleGeometry;
-	var animationSet:ParticleAnimationSet;
+	var animationSets:Array<ParticleAnimationSet>;
 	var mesh:Mesh;
 	var pos:V;
 	var color:C;
@@ -121,7 +122,23 @@ class P { // Particle
 			geometries = new Vector<Geometry>();
 			for (i in 0...aCount) geometries.push(g);
 			geometry = ParticleGeometryHelper.generateGeometry(geometries);
-			animationSet = new ParticleAnimationSet(true);
+			animationSets = new Array<ParticleAnimationSet>();
+			for (i in 0...ANIMATION_SET_COUNT) animationSets.push(createAnimationSet());
+		}
+		var pa = new ParticleAnimator(animationSets[U.rni(ANIMATION_SET_COUNT - 1)]);
+		var cm = new ColorMaterial(color.i);
+		mesh = new Mesh(geometry, cm);
+		mesh.animator = pa;
+		mesh.x = pos.x;
+		mesh.y = pos.y;
+		mesh.rotationZ = angle;
+		mesh.scale(scale);
+		new PrActor(mesh, Std.int(aTicks * 1.5), this);
+		pa.start();
+		return this;
+	}
+	function createAnimationSet():ParticleAnimationSet {
+			var animationSet = new ParticleAnimationSet(true);
 			animationSet.addAnimation(
 				new ParticleColorNode(ParticlePropertiesMode.GLOBAL, false, true, true, false,
 					new ColorTransform(1, 1, 1, 1, 64, 64, -64, 0),
@@ -135,18 +152,7 @@ class P { // Particle
 				new ParticleVelocityNode(ParticlePropertiesMode.LOCAL_STATIC));
 			if (aInitAnimationSet != null) aInitAnimationSet(animationSet);
 			animationSet.initParticleFunc = initParticle;
-		}
-		var pa = new ParticleAnimator(animationSet);
-		var cm = new ColorMaterial(color.i);
-		mesh = new Mesh(geometry, cm);
-		mesh.animator = pa;
-		mesh.x = pos.x;
-		mesh.y = pos.y;
-		mesh.rotationZ = angle;
-		mesh.scale(scale);
-		new PrActor(mesh, Std.int(aTicks * 1.5), this);
-		pa.start();
-		return this;
+			return animationSet;
 	}
 	function initParticle(pp:ParticleProperties):Void {
 		var dr = aTicks * random.f(.5, 1.5) / 60;
@@ -168,7 +174,7 @@ class P { // Particle
 	function get_r():Bool {
 		for (g in geometries) g.dispose();
 		geometry.dispose();
-		animationSet.dispose();
+		for (as in animationSets) as.dispose();
 		return true;
 	}
 }
