@@ -37,22 +37,22 @@ class H { // mesH
 	public function as(radius:Float):H {
 		return addSphere(radius);
 	}
-	public function ds(dotSize:Float = .03):H {
+	public function ds(dotSize:Float = .02):H {
 		return setDotSize(dotSize);
 	}
-	public function dg(width:Float, height:Float, seed:Int = -1):H {
+	public function dg(width:Float, height:Float = -1, seed:Int = -1):H {
 		return generateDotShape(width, height, seed, 3);
 	}
-	public function dg1(width:Float, height:Float, seed:Int = -1):H {
+	public function dg1(width:Float, height:Float = -1, seed:Int = -1):H {
 		return generateDotShape(width, height, seed, 1);
 	}
-	public function dr(width:Float, height:Float, seed:Int = -1):H {
+	public function dr(width:Float, height:Float = -1, seed:Int = -1):H {
 		return fillDotRect(width, height, seed, 3);
 	}
-	public function dr1(width:Float, height:Float, seed:Int = -1):H {
+	public function dr1(width:Float, height:Float = -1, seed:Int = -1):H {
 		return fillDotRect(width, height, seed, 1);
 	}
-	public function drl(width:Float, height:Float):H {
+	public function drl(width:Float, height:Float = -1):H {
 		return lineDotRect(width, height);
 	}
 	public var dic(get, null):H; // dot is cube
@@ -154,6 +154,7 @@ class H { // mesH
 		return this;
 	}
 	function generateDotShape(width:Float, height:Float, seed:Int, layerCount:Int):H {
+		if (height < 0) height = width;
 		if (seed < 0) seed = baseRandomSeed++;
 		var fillRatio = .4;
 		var sideRatio = .2;
@@ -167,6 +168,7 @@ class H { // mesH
 		return this;
 	}
 	function fillDotRect(width:Float, height:Float, seed:Int, layerCount:Int):H {
+		if (height < 0) height = width;
 		if (seed < 0) seed = baseRandomSeed++;
 		var w = Std.int(width / dotSize);
 		var h = Std.int(height / dotSize);
@@ -183,6 +185,7 @@ class H { // mesH
 		return lineDotRect(width, height);
 	}
 	function lineDotRect(width:Float, height:Float):H {
+		if (height < 0) height = width;
 		var w = Std.int(width / dotSize);
 		var h = Std.int(height / dotSize);
 		var ox = -Std.int(w / 2), oy = -Std.int(h / 2);
