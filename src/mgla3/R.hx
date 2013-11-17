@@ -9,11 +9,19 @@ class R { // Random
 	public function p(v:Float = 1):Float { return f(-v, v); }
 	public function pi(v:Int):Int { return fi(-v, v); }
 	public function s(v:Int = -0x7fffffff):R { return setSeed(v); }
+	public function bst(stage:Int):Void { difficultyBasisStage = stage; }
+	public function st(stage:Int):R {
+		this.stage = stage;
+		return setSeed(stage);
+	}
+	public var dc(get, null):Float; // difficulty corrected random
 
 	var x = 0;
 	var y = 0;
 	var z = 0;
 	var w = 0;
+	var stage = 0;
+	var difficultyBasisStage = 100;
 	public function new() {
 		setSeed();
 	}
@@ -22,6 +30,9 @@ class R { // Random
 	}
 	function get_pm():Int {
 		return ni(1) * 2 - 1;
+	}
+	function get_dc():Float {
+		return Math.pow(n(), difficultyBasisStage / (stage + 1));
 	}
 
 	function setSeed(v:Int = -0x7fffffff):R {
