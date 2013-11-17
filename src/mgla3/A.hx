@@ -16,8 +16,8 @@ class A { // Actor
 	public var s = .0; // speed
 	public var t(get, null):Int; // ticks
 	public var r(get, null):Bool; // remove
-	public function ih(actors:Array<Dynamic>):Bool {
-		return isHit(actors);
+	public function ih(actorClassName:String):Bool {
+		return isHit(actorClassName);
 	}
 	public function sc(x:Float = 1, y:Float = -1):A { return setScale(x, y); }
 	
@@ -56,17 +56,17 @@ class A { // Actor
 		return g.s;
 	}
 	static function get_cl():Bool {
-		for (g in groups) clearActors(g.s);
+		for (g in groups) {
+			for (a in g.s) a.r;
+			g.s = new Array<A>();
+		}
 		return true;
 	}
 	static function clearSpecificActors(className:String):Void {
 		var g = groups.get(className);
 		if (g == null) return;
-		clearActors(g.s);
-	}
-	static function clearActors(s:Array<A>):Void {
-		for (a in s) a.r;
-		s = new Array<A>();
+		for (a in g.s) a.r;
+		g.s = new Array<A>();
 	}
 	public var isRemoving = false;
 	public var ticks = 0;
@@ -130,7 +130,8 @@ class A { // Actor
 		isRemoving = true;
 		return true;
 	}
-	function isHit(actors:Array<Dynamic>):Bool {
+	function isHit(actorClassName:String):Bool {
+		var actors = A.acs(actorClassName);
 		if (actors.length <= 0) return false;
 		var hitTest:Dynamic -> Bool;
 		var ac = actors[0];
