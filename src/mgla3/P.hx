@@ -138,21 +138,21 @@ class P { // Particle
 		return this;
 	}
 	function createAnimationSet():ParticleAnimationSet {
-			var animationSet = new ParticleAnimationSet(true);
-			animationSet.addAnimation(
-				new ParticleColorNode(ParticlePropertiesMode.GLOBAL, false, true, true, false,
-					new ColorTransform(1, 1, 1, 1, 64, 64, -64, 0),
-					new ColorTransform(1, 1, 1, 1, -64, -64, 64, 0),
-					.1));
-			animationSet.addAnimation(
-				new ParticleColorNode(ParticlePropertiesMode.LOCAL_STATIC, false, true));
-			animationSet.addAnimation(
-				new ParticleScaleNode(ParticlePropertiesMode.LOCAL_STATIC, false, false));
-			animationSet.addAnimation(
-				new ParticleVelocityNode(ParticlePropertiesMode.LOCAL_STATIC));
-			if (aInitAnimationSet != null) aInitAnimationSet(animationSet);
-			animationSet.initParticleFunc = initParticle;
-			return animationSet;
+		var animationSet = new ParticleAnimationSet(true);
+		animationSet.addAnimation(
+			new ParticleColorNode(ParticlePropertiesMode.GLOBAL, false, true, true, false,
+				new ColorTransform(1, 1, 1, 1, 64, 64, -64, 0),
+				new ColorTransform(1, 1, 1, 1, -64, -64, 64, 0),
+				.1));
+		animationSet.addAnimation(
+			new ParticleColorNode(ParticlePropertiesMode.LOCAL_STATIC, false, true));
+		animationSet.addAnimation(
+			new ParticleScaleNode(ParticlePropertiesMode.LOCAL_STATIC, false, false));
+		animationSet.addAnimation(
+			new ParticleVelocityNode(ParticlePropertiesMode.LOCAL_STATIC));
+		if (aInitAnimationSet != null) aInitAnimationSet(animationSet);
+		animationSet.initParticleFunc = initParticle;
+		return animationSet;
 	}
 	function initParticle(pp:ParticleProperties):Void {
 		var dr = aTicks * random.f(.5, 1.5) / 60;
