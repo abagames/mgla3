@@ -243,7 +243,7 @@ class Letter {
 		hs = new Array<H>();
 	}
 	function setInterval(sx:Float = 1.0, sy:Float = 1.0):Void {
-		interval.xy(baseSize * sx * 5, baseSize * sy * 6);
+		interval.xy(baseSize * sx * 5 / G.pixelWHRatio, baseSize * sy * 6);
 	}
 }
 enum LetterAlign {
